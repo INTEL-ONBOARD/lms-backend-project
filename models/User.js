@@ -1,5 +1,7 @@
-import mongoose from 'mongoose';
-import roles from '../enums/userRoles';
+const express = require('express');
+const mongoose = require('mongoose');
+
+const roles = require('../enums/userRoles');
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -52,4 +54,4 @@ const UserSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model('User', UserSchema);
-export default User;    
+module.exports = User;

@@ -5,4 +5,4 @@ const roles = {
     MANAGER: 'manager',
 };
 
-export default roles;
+module.exports = roles;
