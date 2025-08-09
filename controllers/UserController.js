@@ -1,11 +1,11 @@
 const User = require('../models/User');
 const express = require('express');
 
-
+const userROle = require('../enums/userRoles');
 
 exports.createuser = async (req, res) => {
     try {
-        const { username, password, email, userROle, isActive, profilePicture, bio } = req.body;
+        const { username, password, email, userRole, isActive, profilePicture, bio } = req.body;
 
         if (!username || !password || !email) {
             //throw new Error('Username, password, and email are required.');
@@ -21,7 +21,7 @@ exports.createuser = async (req, res) => {
             username,
             password,
             email,
-            userROle: userROle || 'GUEST', // Default to GUEST if not provided
+            userRole: userRole || userROle.GUEST, // Default to GUEST if not provided
             isActive: isActive !== undefined ? isActive : true,
             profilePicture: profilePicture || null,
             bio: bio || ''
