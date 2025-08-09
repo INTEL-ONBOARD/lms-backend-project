@@ -1,18 +1,21 @@
 const express = require('express');
 const app = express();
+const logger = require('./middlewares/infoLogger').logger;
+const errorLogger = require('./handlers/errorLogger');
 const port = 3000;
 
-// Middleware to parse JSON bodies
+
 app.use(express.json());
+app.use(logger);
 
-// Sample route
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+    res.send('Server is running!');
 });
 
-// Start the server
 app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+    console.log(`Server is running at http://localhost:${port}`);
 });
 
-module.exports = app; // Export the app for testing or further configuration
+app.use(errorLogger);
+
+module.exports = app; 
