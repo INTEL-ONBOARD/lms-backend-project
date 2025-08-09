@@ -10,10 +10,12 @@ app.use(express.json());
 app.use(logger);
 
 app.get('/health-check', (req, res) => {
-    res.send('Server is running!');
+    res.status(200).json({
+        status: 'success',
+        message: 'Server is running smoothly'
+    });
 });
-app.use('/api', routes);
-
+app.use(routes);
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });

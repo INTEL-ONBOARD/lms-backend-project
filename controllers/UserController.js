@@ -44,10 +44,10 @@ exports.createuser = async (req, res) => {
 
     } catch (error) {
         // Handle errors and send a response
+        console.error('Error creating user:', error);
         res.status(error.status || 500).json({
             status: 'error',
-            message: error.message || 'Internal Server Error',
-            error: error.error || null
+            message: 'Internal Server Error',
         });
     }
 };
@@ -61,9 +61,11 @@ exports.getUsers = async (req, res) => {
             data: users
         });
     } catch (error) {
+        console.error('Error retrieving users:', error);
         res.status(500).json({
             status: 'error',
-            message: error.message || 'Internal Server Error'
+            message: 'Internal Server Error'
         });
+
     }
 };
