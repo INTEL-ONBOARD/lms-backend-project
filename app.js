@@ -8,7 +8,7 @@ const port = 3000;
 app.use(express.json());
 app.use(logger);
 
-app.get('/', (req, res) => {
+app.get('/health-check', (req, res) => {
     res.send('Server is running!');
 });
 
