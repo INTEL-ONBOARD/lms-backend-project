@@ -2,7 +2,7 @@ const router = require('express').Router();
 const UserController = require('../controllers/UserController');
 
 router.get('/', UserController.getUsers);
-router.post('/users', UserController.createuser);
+router.post('/', UserController.createuser);
 // router.get('/:id', UserController.getUserById);
 // router.put('/:id', UserController.updateUser);
 // router.delete('/:id', UserController.deleteUser);

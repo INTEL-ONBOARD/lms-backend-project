@@ -27,19 +27,14 @@ exports.createuser = async (req, res) => {
             bio: bio || ''
         });
 
-        newUser.save((err, savedUser) => {
-            if (err) {
-                throw {
-                    status: 500,
-                    message: 'Error creating user',
-                    error: err.message
-                };
-            }
-            res.status(201).json({
-                status: 'success',
-                message: 'User created successfully',
-                data: savedUser
-            });
+        // Save the user to the database
+        const savedUser = await newUser.save();
+
+        // Send a success response
+        res.status(201).json({
+            status: 'success',
+            message: 'User created successfully',
+            data: savedUser
         });
 
     } catch (error) {
