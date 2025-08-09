@@ -2,6 +2,17 @@ const express = require('express');
 const app = express();
 const logger = require('./middlewares/infoLogger').logger;
 const errorLogger = require('./handlers/errorLogger');
+const mongoose = require('mongoose');
+const connectDB = require('./config/db');
+
+// Connect to MongoDB
+connectDB();
+
+// Set up mongoose connection error handling
+mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err.message);
+});
+
 const port = 3000;
 
 const routes = require('./routes/Routes');

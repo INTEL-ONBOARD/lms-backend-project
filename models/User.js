@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         trim: true
     },
-    userROle: {
+    userRole: {
         type: String,
         enum: roles,
         default: roles.GUEST
