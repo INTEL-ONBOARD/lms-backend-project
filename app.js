@@ -5,6 +5,7 @@ const logger = require('./middlewares/infoLogger').logger;
 const errorLogger = require('./handlers/errorLogger');
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
+const routes = require('./routes/Routes');
 
 // Connect to MongoDB
 connectDB();
@@ -13,14 +14,15 @@ app.use(cors());
 app.use(express.json());
 app.use(logger);
 
+
+app.use(routes);
+
 // Set up mongoose connection error handling
 mongoose.connection.on('error', (err) => {
     console.error('MongoDB connection error:', err.message);
 });
 
 const port = 3000;
-
-const routes = require('./routes/Routes');
 
 
 app.get('/health-check', (req, res) => {
@@ -29,7 +31,7 @@ app.get('/health-check', (req, res) => {
         message: 'Server is running smoothly'
     });
 });
-app.use(routes);
+
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
