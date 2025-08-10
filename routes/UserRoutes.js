@@ -3,10 +3,10 @@ const UserController = require('../controllers/UserController');
 
 router.get('/', UserController.getUsers);
 router.post('/', UserController.createuser);
+router.post('/login', UserController.loginUser);
 router.get('/:id', UserController.getUserById);
 router.put('/:id', UserController.updateUser);
 router.delete('/:id', UserController.deleteUser);
-
 
 module.exports = router;
 

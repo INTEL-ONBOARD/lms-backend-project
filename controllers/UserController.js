@@ -141,3 +141,62 @@ exports.deleteUser = async (req, res) => {
         });
     }
 };
+
+
+exports.loginUser = async (req, res) => {
+    try {
+        const { email, username, password } = req.body;
+
+        if ((!email && !username) || !password) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Email or username and password are required.'
+            });
+        }
+
+        // Find user by email or username
+        const user = await User.findOne({
+            $or: [
+                email ? { email } : null,
+                username ? { username } : null
+            ].filter(Boolean)
+        });
+
+        if (!user) {
+            return res.status(401).json({
+                status: 'error',
+                message: 'Invalid credentials'
+            });
+        }
+
+        // Compare password (plain text check for now)
+        if (user.password !== password) {
+            return res.status(401).json({
+                status: 'error',
+                message: 'Invalid credentials'
+            });
+        }
+
+        // Update last login
+        user.lastLogin = new Date();
+        await user.save();
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Login successful',
+            data: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                userRole: user.userRole
+            }
+        });
+
+    } catch (error) {
+        console.error('Error logging in user:', error);
+        res.status(500).json({
+            status: 'error',
+            message: 'Internal Server Error'
+        });
+    }
+};
