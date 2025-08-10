@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require("cors");
 const logger = require('./middlewares/infoLogger').logger;
 const errorLogger = require('./handlers/errorLogger');
 const mongoose = require('mongoose');
@@ -7,6 +8,10 @@ const connectDB = require('./config/db');
 
 // Connect to MongoDB
 connectDB();
+
+app.use(cors());
+app.use(express.json());
+app.use(logger);
 
 // Set up mongoose connection error handling
 mongoose.connection.on('error', (err) => {
@@ -17,8 +22,6 @@ const port = 3000;
 
 const routes = require('./routes/Routes');
 
-app.use(express.json());
-app.use(logger);
 
 app.get('/health-check', (req, res) => {
     res.status(200).json({
