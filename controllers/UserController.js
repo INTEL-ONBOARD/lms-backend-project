@@ -64,3 +64,81 @@ exports.getUsers = async (req, res) => {
 
     }
 };
+exports.getUserById = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'User not found'
+            });
+        }
+
+        res.status(200).json({
+            status: 'success',
+            message: 'User retrieved successfully',
+            data: user
+        });
+    } catch (error) {
+        console.error('Error retrieving user:', error);
+        res.status(500).json({
+            status: 'error',
+            message: 'Internal Server Error'
+        });
+    }
+};
+exports.updateUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const updates = req.body;
+        updates.updatedAt = new Date(); // Update the timestamp
+
+        const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true });
+
+        if (!updatedUser) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'User not found'
+            });
+        }
+        res.status(200).json({
+            status: 'success',
+            message: 'User updated  successfully',
+            data: updatedUser
+        });
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).json({
+            status: 'error',
+            message: 'Internal Server Error'
+        });
+    }
+};
+
+exports.deleteUser = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const deletedUser = await User.findByIdAndDelete(userId);
+
+        if (!deletedUser) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'User not found'
+            });
+        }
+
+        res.status(200).json({
+            status: 'success',
+            message: 'User deleted successfully',
+            data: deletedUser
+        });
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({
+            status: 'error',
+            message: 'Internal Server Error'
+        });
+    }
+};
